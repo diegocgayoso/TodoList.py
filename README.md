@@ -49,6 +49,7 @@ python app.py
 | POST   | `/add`         | Adiciona nova task      |
 | POST   | `/delete/<id>` | Remove task por ID      |
 | POST   | `/edit/<id>`   | Atualiza task por ID    |
+| POST   | `/completed/<id>`| Concluir task por ID    |
 
 ---
 
