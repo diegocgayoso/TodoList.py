@@ -11,7 +11,7 @@
     <title>To Do - Python</title>
   </head>
   <body class="bg-gray-900 h-screen flex items-center justify-center flex-col">
-    <h1 class="text-4xl text-white my-4 ">To Do List</h1>
+    <h1 class="text-4xl text-white my-4">To Do List</h1>
     <form action="/add" method="post">
       <input
         type="text"
@@ -31,13 +31,28 @@
     <ul class="w-96">
       {% for t in tasks %}
 
-      <li class="text-gray-600 hover:text-gray-400 flex items-center justify-between py-2 border-b border-gray-600 duration-300">
-        
-        <form action="/edit/{{ t.id }}" method="post">
-            <input type="text" name="description" value="{{ t.description }}">
-            <button type="submit" class="cursor-pointer">
-              <span class="material-symbols-outlined text-green-500">edit</span>
-            </button>
+      <li
+        class="text-gray-600 hover:text-gray-400 flex items-center justify-between py-2 border-b border-gray-600 duration-300"
+      >
+        <form action="/complete/{{ t.id }}" method="POST">
+          <input
+            type="checkbox"
+            name="completed"
+            value="{{t.completed}}"
+            onchange="this.form.submit()"
+            {%
+            if
+            t.completed
+            %}checked{%
+            endif
+            %}
+          />
+        </form>
+        <form action="/edit/{{ t.id }}" method="POST">
+          <input type="text" name="description" value="{{ t.description }}" />
+          <button type="submit" class="cursor-pointer">
+            <span class="material-symbols-outlined text-green-500">edit</span>
+          </button>
         </form>
         <form action="/delete/{{ t.id }}" method="POST">
           <button type="submit" class="cursor-pointer">
@@ -45,7 +60,6 @@
           </button>
         </form>
       </li>
-
       {% endfor%}
     </ul>
   </body>

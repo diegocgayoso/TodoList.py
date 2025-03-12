@@ -11,6 +11,7 @@ class Task(db.Model):
     __tablename__ = "tasks"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     description = db.Column(db.String(255), unique=True, nullable=False)
+    completed = db.Column(db.Boolean, default=False)
 
 
 # Rota principal
@@ -51,6 +52,19 @@ def edit(task_id):
     
     if task:
         task.description = request.form["description"]
+        db.session.commit()
+    return redirect("/")
+
+# Rota de marcar como concluída
+@app.route("/complete/<int:task_id>", methods=["POST"])
+def completed(task_id):
+    task = Task.query.get(task_id)
+    
+    if task.completed == False:
+        task.completed = True
+        db.session.commit()
+    elif task.completed == True:
+        task.completed = False
         db.session.commit()
     return redirect("/")
 
